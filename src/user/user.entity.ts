@@ -3,9 +3,12 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   BaseEntity,
+  OneToMany,
   Column,
   Entity
 } from 'typeorm'
+
+import { Leak } from '../leak/leak.entity'
 
 @Entity('users')
 export class User extends BaseEntity {
@@ -23,6 +26,9 @@ export class User extends BaseEntity {
 
   @Column({ type: 'varchar' })
   cpf: string
+
+  @OneToMany(() => Leak, (leak) => leak.user, { eager: true })
+  leaks: Leak[]
 
   @CreateDateColumn()
   createdAt: Date
